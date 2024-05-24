@@ -2,9 +2,62 @@
 
 import { ref, onValue, push } from "firebase/database";
 import { db } from "../services/firebase/firebaseConfiguration";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
+import React, { ReactNode, useEffect, useState } from "react";
+import { onAuthStateChanged, getAuth, User, signOut } from "firebase/auth";
+import { AuthContext } from "../../context/AuthContext";
+import { app } from "../services/firebase/firebaseConfiguration";
 
+interface AuthContextProviderProps {
+    children: ReactNode;
+  }
+
+// codigo para limitar uso para apenas usarios logados (não funcionou acho)
+  const auth = getAuth(app);
+
+  export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
+    children,
+  }) => {
+    const [userAuth, setUserAuth] = useState<User | null>(null);
+    const [loading, setLoading] = useState(true);
+  
+    useEffect(() => {
+      const unsubscribe = onAuthStateChanged(
+        auth,
+        (authUserCredentials: User | null) => {
+          setUserAuth(authUserCredentials);
+          setLoading(false);
+        }
+      );
+  
+      return () => unsubscribe();
+    }, []);
+  
+    async function logout() {
+      let result = null,
+        error = null;
+      try {
+        result = await signOut(auth);
+      } catch (e) {
+        error = e;
+      }
+  
+      return { result, error };
+    }
+  
+    return (
+      <AuthContext.Provider value={{ userAuth, logout }}>
+        {loading ? (
+          <div className="min-h-screen bg-gray-800 flex justify-center items-center">
+            <h1 className="text-white text-3xl">Loading...</h1>
+          </div>
+        ) : (
+          children
+        )}
+      </AuthContext.Provider>
+    );
+  };
+// fim 
 interface IMeta {
     [key: string]: {
         data_conclusao: string;
@@ -37,6 +90,7 @@ export default function Home() {
             status: "",
             titulo: "",
             usuario: "",
+            //tentei aplicar esse metodo e não consegui: https://stackoverflow.com/questions/38352772/is-there-any-way-to-get-firebase-auth-user-uid
         });
         router.push("/");
     };
@@ -65,6 +119,7 @@ export default function Home() {
                             id="titulo"
                             type="text"
                             placeholder="Titulo"
+                            maxLength={30}//limite de characteres
                             value={newMeta.titulo}
                             onChange={(e) =>
                                 setnewMeta({ ...newMeta, titulo: e.target.value })
@@ -83,6 +138,7 @@ export default function Home() {
                             id="descricao"
                             type="text"
                             placeholder="descrição"
+                            maxLength={100}//limite de characteres
                             value={newMeta.descricao}
                             onChange={(e) =>
                                 setnewMeta({ ...newMeta, descricao: e.target.value })

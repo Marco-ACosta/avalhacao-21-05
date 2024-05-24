@@ -71,7 +71,7 @@ function SignIn() {
           <button
             type="button"
             className="w-full bg-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            onClick={() => router.push("/signup")}
+            onClick={() => router.push("/signUp")}
           >
             Sign Up
           </button>

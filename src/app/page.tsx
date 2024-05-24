@@ -4,6 +4,7 @@ import { ref, onValue, remove } from "firebase/database";
 import { db } from "./services/firebase/firebaseConfiguration";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import signOutUser from "./services/firebase/auth/signOut";
 
 interface IMeta {
   [key: string]: {
@@ -52,6 +53,22 @@ export default function Home() {
           <Link href="/signUp">
             <button className="bg-green-500 text-white py-2 px-4">
               Registrar
+            </button>
+          </Link>
+          <button
+            onClick={async () => {
+              const { error } = await signOutUser();
+              if (error) {
+                console.error("Erro ao deslogar:", error);
+              }
+            }}
+            className="bg-red-500 text-white py-2 px-4"
+          >
+            Logout
+          </button>
+          <Link href="/novasmetas">
+            <button className="bg-green-500 text-white py-2 px-4">
+              Nova Meta
             </button>
           </Link>
         </div>
