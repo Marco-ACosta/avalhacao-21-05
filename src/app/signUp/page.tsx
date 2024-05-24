@@ -20,7 +20,7 @@ function Page() {
 
     // else successful
     console.log(result);
-    return router.push("/signin");
+    return router.push("/signIn");
   };
 
   return (
@@ -61,7 +61,7 @@ function Page() {
           <button
             type="button"
             className="w-full bg-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            onClick={() => router.push("/signin")}
+            onClick={() => router.push("/signIn")}
           >
             Sign In
           </button>

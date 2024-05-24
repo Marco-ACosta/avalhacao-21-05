@@ -10,7 +10,7 @@ function Page() {
   console.log(userAuth);
 
   if (userAuth == null) {
-    router.push("/signin");
+    router.push("/signIn");
     return null; // Evitar renderização de componentes desnecessários
   }
 
