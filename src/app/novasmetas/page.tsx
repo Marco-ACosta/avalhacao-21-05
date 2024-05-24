@@ -12,7 +12,7 @@ interface AuthContextProviderProps {
     children: ReactNode;
   }
 
-// codigo para limitar uso para apenas usarios logados (não funcionou acho)
+/* codigo para limitar uso para apenas usarios logados (não funcionou acho)
   const auth = getAuth(app);
 
   export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
@@ -57,7 +57,7 @@ interface AuthContextProviderProps {
       </AuthContext.Provider>
     );
   };
-// fim 
+ */ 
 interface IMeta {
     [key: string]: {
         data_conclusao: string;
