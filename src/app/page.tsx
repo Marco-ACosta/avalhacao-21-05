@@ -42,6 +42,20 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-800 py-6 flex flex-col justify-center sm:py-12">
+      <header className="flex px-6">
+        <div className="space-x-4">
+          <Link href="/signIn">
+            <button className="bg-blue-500 text-white  py-2 px-4">
+              Login
+            </button>
+          </Link>
+          <Link href="/signUp">
+            <button className="bg-green-500 text-white py-2 px-4">
+              Registrar
+            </button>
+          </Link>
+        </div>
+      </header>
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 m-12">
         {!loading &&
           Object.keys(metas).map((userId) => (
@@ -55,13 +69,13 @@ export default function Home() {
                       : `${metas[userId].titulo}`.toUpperCase()}
                   </h2>
                   <div className="my-4">
-                  <h1 className="text-xl font-bold">{`ID: ${userId}`}</h1>
-                  <p className="text-gray-700">{`Descrição: ${metas[userId].descricao}`}</p>
-                  <p className="text-gray-700">{`Inicio: ${metas[userId].data_inicio}`}</p>
-                  <p className="text-gray-700">{`Conclusão: ${metas[userId].data_conclusao}`}</p>
-                  <p className="text-gray-700">{`Status: ${metas[userId].status}`}</p>
-                  <p className="text-gray-700">{`Usuario: ${metas[userId].usuario}`}</p>
-                  <div className="flex justify-center space-x-4 mt-4">
+                    <h1 className="text-xl font-bold">{`ID: ${userId}`}</h1>
+                    <p className="text-gray-700">{`Descrição: ${metas[userId].descricao}`}</p>
+                    <p className="text-gray-700">{`Inicio: ${metas[userId].data_inicio}`}</p>
+                    <p className="text-gray-700">{`Conclusão: ${metas[userId].data_conclusao}`}</p>
+                    <p className="text-gray-700">{`Status: ${metas[userId].status}`}</p>
+                    <p className="text-gray-700">{`Usuario: ${metas[userId].usuario}`}</p>
+                    <div className="flex justify-center space-x-4 mt-4">
                       <Link href={`/meta/${userId}`}>
                         <button className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
                           Detalhes
